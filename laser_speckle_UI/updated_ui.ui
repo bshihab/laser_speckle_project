@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LaserSpeckleUI</class>
+ <widget class="QWidget" name="LaserSpeckleUI">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Laser Speckle Analyzer - Modern UI</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+    font-family: Arial;
+    font-size: 10pt;
+    background-color: #f5f5f7;
+    color: #333333;
+}
+
+QGroupBox {
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    margin-top: 1ex;
+    font-weight: bold;
+    background-color: white;
+    color: #333333;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top center;
+    padding: 0 5px;
+    font-size: 11pt;
+    color: #333333;
+}
+
+QPushButton {
+    background-color: #0066cc;
+    color: white;
+    border-radius: 5px;
+    padding: 8px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #0080ff;
+}
+
+QPushButton:pressed {
+    background-color: #004c99;
+}
+
+QLineEdit {
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding: 4px;
+    background-color: white;
+    color: #333333;
+}
+
+QSlider::groove:horizontal {
+    border: 1px solid #cccccc;
+    height: 8px;
+    background: #ffffff;
+    margin: 2px 0;
+    border-radius: 4px;
+}
+
+QSlider::handle:horizontal {
+    background: #0066cc;
+    border: 1px solid #5c5c5c;
+    width: 18px;
+    margin: -2px 0;
+    border-radius: 9px;
+}
+
+QRadioButton {
+    padding: 6px;
+    color: #333333;
+}
+
+QRadioButton:checked {
+    font-weight: bold;
+}
+
+QTextEdit {
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    background-color: white;
+    color: #333333;
+}
+
+QLabel {
+    color: #333333;
+}
+
+QLabel#statsLabel, QLabel#recommendationLabel {
+    font-weight: bold;
+    padding: 8px;
+    background-color: #e0f0ff;
+    border-radius: 4px;
+    color: #333333;
+}
+</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>12</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="leftColumn" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>4</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QVBoxLayout" name="leftColumnLayout">
+      <item>
+       <widget class="QGroupBox" name="settingsGroup">
+        <property name="title">
+         <string>Capture Settings</string>
+        </property>
+        <layout class="QGridLayout" name="settingsLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="exposureLabel">
+           <property name="text">
+            <string>Exposure Time (ms):</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="exposureInput">
+           <property name="text">
+            <string>50</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="frequencyLabel">
+           <property name="text">
+            <string>Update Frequency (ms):</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="frequencyInput">
+           <property name="text">
+            <string>500</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="controlGroup">
+        <property name="title">
+         <string>Capture Control</string>
+        </property>
+        <layout class="QHBoxLayout" name="controlLayout">
+         <item>
+          <widget class="QPushButton" name="startButton">
+           <property name="text">
+            <string>Start Capture</string>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/play.png</normaloff>icons/play.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="stopButton">
+           <property name="text">
+            <string>Stop Capture</string>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/stop.png</normaloff>icons/stop.png</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="currentGroup">
+        <property name="title">
+         <string>Laser Current Control</string>
+        </property>
+        <layout class="QVBoxLayout" name="currentLayout">
+         <item>
+          <widget class="QLabel" name="currentLabel">
+           <property name="text">
+            <string>Current: 50%</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="currentSlider">
+           <property name="maximum">
+            <number>100</number>
+           </property>
+           <property name="value">
+            <number>50</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksBelow</enum>
+           </property>
+           <property name="tickInterval">
+            <number>10</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="previewGroup">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="title">
+         <string>Preview with ROI</string>
+        </property>
+        <layout class="QVBoxLayout" name="previewLayout"/>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="middleColumn" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>3</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QVBoxLayout" name="middleColumnLayout">
+      <item>
+       <widget class="QGroupBox" name="analysisGroup">
+        <property name="title">
+         <string>Analysis Method</string>
+        </property>
+        <layout class="QVBoxLayout" name="analysisLayout">
+         <item>
+          <widget class="QRadioButton" name="histogramRadio">
+           <property name="text">
+            <string>Histogram Analysis</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="pixelCountRadio">
+           <property name="text">
+            <string>Pixel Count Analysis</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="contrastRadio">
+           <property name="text">
+            <string>Contrast Analysis</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="allMethodsRadio">
+           <property name="text">
+            <string>All Methods</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="analyzeButton">
+           <property name="text">
+            <string>Analyze ROI</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="statsGroup">
+        <property name="title">
+         <string>Statistics</string>
+        </property>
+        <layout class="QVBoxLayout" name="statsLayout">
+         <item>
+          <widget class="QLabel" name="meanLabel">
+           <property name="text">
+            <string>Mean Intensity: --</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="saturationLabel">
+           <property name="text">
+            <string>Saturated Pixels: --</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="contrastLabel">
+           <property name="text">
+            <string>Contrast Ratio: --</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="recommendationLabel">
+           <property name="text">
+            <string>Analyze an image for recommendations</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="logGroup">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="title">
+         <string>Activity Log</string>
+        </property>
+        <layout class="QVBoxLayout" name="logLayout">
+         <item>
+          <widget class="QTextEdit" name="logText">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+           <property name="html">
+            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Arial'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Starting Laser Speckle Analyzer...&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ready for capture.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="rightColumn" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>5</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QVBoxLayout" name="rightColumnLayout">
+      <item>
+       <widget class="QGroupBox" name="rawImageGroup">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="title">
+         <string>Raw Image</string>
+        </property>
+        <layout class="QVBoxLayout" name="rawImageLayout"/>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="speckleImageGroup">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="title">
+         <string>Speckle Analysis</string>
+        </property>
+        <layout class="QVBoxLayout" name="speckleImageLayout"/>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="fileControlLayout">
+        <item>
+         <widget class="QPushButton" name="loadButton">
+          <property name="text">
+           <string>Load Image</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="saveButton">
+          <property name="text">
+           <string>Save Results</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="resetButton">
+          <property name="text">
+           <string>Reset ROI</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui> 

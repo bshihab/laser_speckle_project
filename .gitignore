@@ -1,0 +1,24 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+laser_speckle_UI/*.qtcreator
+.DS_Store
+
+# Ignore all PNG files
+*.png
+
+# Ignore all RAW files
+*.raw
+
+# Ignore analysis results directory
+analysis_results/
+
+# Ignore raw captures directory
+**/raw_captures/
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
