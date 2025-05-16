@@ -1,6 +1,6 @@
 # Laser Speckle Analysis Project
 
-This project implements a sophisticated system for capturing and analyzing laser speckle patterns in real-time. It consists of several components:
+This project implements a system for capturing and analyzing laser speckle patterns in real-time. It consists of several components:
 
 1. A modern Python-based UI application for laser speckle analysis
 2. Arduino-based hardware control for laser intensity adjustment
@@ -11,7 +11,7 @@ This project implements a sophisticated system for capturing and analyzing laser
 
 - `laser_speckle_UI/` - Main UI application for laser speckle analysis
   - `updated_widget.py` - **Complete, all-in-one solution** with camera integration and Arduino control
-  - `main.py` - **New modularized entry point** that uses components from the modules directory
+  - `main.py` - **modularized code** that uses components from the modules directory
   - `modules/` - **Modularized components**
     - `ui/` - User interface components
       - `canvas.py` - MatplotlibCanvas class for image display and ROI selection
@@ -23,14 +23,11 @@ This project implements a sophisticated system for capturing and analyzing laser
     - `utils/` - Utility functions
       - `image_utils.py` - Image processing utilities
   - `updated_ui.py` and `updated_ui.ui` - UI definitions
-- `user_controlled_UI/` - Alternative simple UI for controlling laser intensity (not needed if using updated_widget.py)
+- `user_controlled_UI/` - Alternative simple UI for controlling laser intensity
   - `UI.py` - Simple UI implementation
   - `user_controlled_UI.ino` - Arduino code for laser control
 - `camera/` - Camera integration code
   - `camera_setup.py` - Basler camera setup and configuration
-- `raw_images/` - Sample captured raw images with different exposure times (available locally, not in Git)
-  - Contains raw image files (*.raw) and histogram analysis results (*.png)
-  - Note: These files are excluded from Git via .gitignore due to their large size
 - `analysis_results/` - Output directory for analysis results
 - Analysis modules:
   - `histogram_saturation_analyzer.py` - Analyzes image saturation using histograms
@@ -42,9 +39,8 @@ This project implements a sophisticated system for capturing and analyzing laser
 ## Prerequisites
 
 ### Hardware Requirements
-- Arduino board
+- Arduino board (DAC built into board)
 - Basler camera (pylon SDK required)
-- Digital-to-Analog Converter (DAC) connected to Arduino pin A0
 - Laser source connected to DAC output
 
 ### Software Dependencies
@@ -53,7 +49,6 @@ This project implements a sophisticated system for capturing and analyzing laser
 3. PyPylon for Basler camera integration
 4. NumPy, Matplotlib for analysis
 5. Basler Pylon SDK (must be installed separately)
-6. Arduino IDE for uploading Arduino code
 
 ## Installation
 
@@ -62,7 +57,7 @@ This project implements a sophisticated system for capturing and analyzing laser
 Create and activate a virtual environment:
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+source .venv/bin/activate
 ```
 
 Install the required Python packages:
@@ -70,26 +65,14 @@ Install the required Python packages:
 pip install PySide6 numpy matplotlib pyserial pypylon opencv-python
 ```
 
-Note: PyPylon may require additional installation steps. Please refer to the [Basler Pylon SDK documentation](https://docs.baslerweb.com/overview).
+Note: PyPylon may require additional installation steps. Refer to the [Basler Pylon SDK documentation](https://docs.baslerweb.com/overview).
 
-### 2. Arduino Setup
-
-1. Open the Arduino IDE
-2. Load the `user_controlled_UI/user_controlled_UI.ino` file
-3. Connect your Arduino board to your computer
-4. Upload the sketch to the Arduino
-
-### 3. Hardware Connections
-
-1. Connect the DAC to Arduino pin A0
-2. Connect the laser source to the DAC output
-3. Connect the Basler camera to the computer via USB
 
 ## Running the Applications
 
 ### Main Application (Recommended)
 
-You can run the application in either the original all-in-one version or the new modularized version. Make sure you're in the project root directory when running any of these commands.
+You can run the application in either the original all-in-one version or the modularized version. Make sure you're in the project root directory when running any of these commands.
 
 #### Option 1: Original All-in-One Implementation
 
@@ -97,25 +80,15 @@ You can run the application in either the original all-in-one version or the new
 python -m laser_speckle_UI.updated_widget
 ```
 
-#### Option 2: New Modularized Implementation (Recommended)
+#### Option 2: Modularized Implementation (Recommended)
 
 ```bash
 python -m laser_speckle_UI.main
 ```
 
-Both implementations provide identical functionality, but the modularized version is more maintainable and easier to extend.
+Both implementations provide identical functionality, but the modularized version is more maintainable.
 
 **Important Note:** The modularized implementation uses relative imports, so you must run it as a module with the `-m` flag as shown above, from the project root directory.
-
-**Alternative method:** If you prefer to run the script directly, you can add the project root to your Python path:
-
-```bash
-# From the project root directory
-export PYTHONPATH=$PYTHONPATH:$(pwd)  # On Windows: set PYTHONPATH=%PYTHONPATH%;%CD%
-python laser_speckle_UI/main.py
-```
-
-**Note:** When using either version, you don't need to separately run the simple UI or upload Arduino code - the application handles all communication with both the camera and Arduino.
 
 ### Alternative: Simple Laser Control UI
 
@@ -147,7 +120,6 @@ If you encounter import errors when running the modularized application, try the
 2. Set the Python path to include the project root:
    ```bash
    export PYTHONPATH=$PYTHONPATH:$(pwd)  # On macOS/Linux
-   set PYTHONPATH=%PYTHONPATH%;%CD%      # On Windows
    ```
 
 3. Create a `.pth` file in your virtual environment's site-packages directory with the path to your project.
@@ -165,7 +137,6 @@ If you encounter import errors when running the modularized application, try the
 
 ### UI Display Issues
 - The UI files are designed for PySide6. Ensure you have the correct version installed
-- Form paths may need to be adjusted based on your installation location
 
 ## Data Analysis Tools
 
