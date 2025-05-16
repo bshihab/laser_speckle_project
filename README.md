@@ -89,23 +89,31 @@ Note: PyPylon may require additional installation steps. Please refer to the [Ba
 
 ### Main Application (Recommended)
 
-You can run the application in either the original all-in-one version or the new modularized version:
+You can run the application in either the original all-in-one version or the new modularized version. Make sure you're in the project root directory when running any of these commands.
 
 #### Option 1: Original All-in-One Implementation
 
 ```bash
-cd laser_speckle_UI
-python updated_widget.py
+python -m laser_speckle_UI.updated_widget
 ```
 
 #### Option 2: New Modularized Implementation (Recommended)
 
 ```bash
-cd laser_speckle_UI
-python main.py
+python -m laser_speckle_UI.main
 ```
 
 Both implementations provide identical functionality, but the modularized version is more maintainable and easier to extend.
+
+**Important Note:** The modularized implementation uses relative imports, so you must run it as a module with the `-m` flag as shown above, from the project root directory.
+
+**Alternative method:** If you prefer to run the script directly, you can add the project root to your Python path:
+
+```bash
+# From the project root directory
+export PYTHONPATH=$PYTHONPATH:$(pwd)  # On Windows: set PYTHONPATH=%PYTHONPATH%;%CD%
+python laser_speckle_UI/main.py
+```
 
 **Note:** When using either version, you don't need to separately run the simple UI or upload Arduino code - the application handles all communication with both the camera and Arduino.
 
@@ -114,8 +122,7 @@ Both implementations provide identical functionality, but the modularized versio
 The simple UI is an alternative, minimal interface just for controlling laser intensity. Only use this if you're not using the main application:
 
 ```bash
-cd user_controlled_UI
-python UI.py
+python user_controlled_UI/UI.py
 ```
 
 For this simple UI to work, you must first upload the `user_controlled_UI.ino` sketch to your Arduino.
@@ -125,14 +132,30 @@ For this simple UI to work, you must first upload the `user_controlled_UI.ino` s
 To test the camera setup and capture raw images:
 
 ```bash
-cd camera
-python camera_setup.py
+python camera/camera_setup.py
 ```
+
+## Troubleshooting Import Issues
+
+If you encounter import errors when running the modularized application, try these solutions:
+
+1. Always run the application as a module from the project root with the `-m` flag:
+   ```bash
+   python -m laser_speckle_UI.main
+   ```
+
+2. Set the Python path to include the project root:
+   ```bash
+   export PYTHONPATH=$PYTHONPATH:$(pwd)  # On macOS/Linux
+   set PYTHONPATH=%PYTHONPATH%;%CD%      # On Windows
+   ```
+
+3. Create a `.pth` file in your virtual environment's site-packages directory with the path to your project.
 
 ## Debugging Guide
 
 ### Serial Connection Issues
-- Check the Arduino connection port in UI.py (currently set to `/dev/cu.usbmodem101`)
+- Check the Arduino connection port (common ports are `/dev/cu.usbmodem*` on macOS, `/dev/ttyACM*` on Linux, and `COM*` on Windows)
 - The code includes a retry mechanism to establish serial connection
 
 ### Camera Connection Issues
@@ -146,15 +169,15 @@ python camera_setup.py
 
 ## Data Analysis Tools
 
-The project includes several standalone analysis scripts:
+The project includes several standalone analysis scripts that can be run from the project root:
 
 - `contrast_analyzer.py` - Analyzes contrast in speckle patterns
   ```bash
-  python contrast_analyzer.py --image path/to/your/image.raw --width 960 --height 1200
+  python contrast_analyzer.py --image raw_images/your_image.raw --width 960 --height 1200
   ```
 
 - `histogram_saturation_analyzer.py` - Analyzes image saturation
   ```bash
-  python histogram_saturation_analyzer.py --image path/to/your/image.raw
+  python histogram_saturation_analyzer.py --image raw_images/your_image.raw
   ```
   
