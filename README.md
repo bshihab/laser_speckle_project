@@ -11,6 +11,17 @@ This project implements a sophisticated system for capturing and analyzing laser
 
 - `laser_speckle_UI/` - Main UI application for laser speckle analysis
   - `updated_widget.py` - **Complete, all-in-one solution** with camera integration and Arduino control
+  - `main.py` - **New modularized entry point** that uses components from the modules directory
+  - `modules/` - **Modularized components**
+    - `ui/` - User interface components
+      - `canvas.py` - MatplotlibCanvas class for image display and ROI selection
+    - `hardware/` - Hardware control modules
+      - `camera_controller.py` - Basler camera integration
+      - `arduino_controller.py` - Arduino communication
+    - `analysis/` - Image analysis modules
+      - `analyzer.py` - Image analysis algorithms
+    - `utils/` - Utility functions
+      - `image_utils.py` - Image processing utilities
   - `updated_ui.py` and `updated_ui.ui` - UI definitions
 - `user_controlled_UI/` - Alternative simple UI for controlling laser intensity (not needed if using updated_widget.py)
   - `UI.py` - Simple UI implementation
@@ -78,20 +89,25 @@ Note: PyPylon may require additional installation steps. Please refer to the [Ba
 
 ### Main Application (Recommended)
 
-The `updated_widget.py` in the laser_speckle_UI directory is the recommended application to use. It provides a complete, all-in-one solution that:
-- Controls the Basler camera
-- Communicates with the Arduino for laser intensity control
-- Performs speckle pattern analysis
-- Provides auto-adjustment capabilities
+You can run the application in either the original all-in-one version or the new modularized version:
 
-To run it:
+#### Option 1: Original All-in-One Implementation
 
 ```bash
 cd laser_speckle_UI
 python updated_widget.py
 ```
 
-**Note:** When using `updated_widget.py`, you don't need to separately run the simple UI or upload Arduino code - it handles all communication with both the camera and Arduino.
+#### Option 2: New Modularized Implementation (Recommended)
+
+```bash
+cd laser_speckle_UI
+python main.py
+```
+
+Both implementations provide identical functionality, but the modularized version is more maintainable and easier to extend.
+
+**Note:** When using either version, you don't need to separately run the simple UI or upload Arduino code - the application handles all communication with both the camera and Arduino.
 
 ### Alternative: Simple Laser Control UI
 
