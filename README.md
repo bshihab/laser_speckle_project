@@ -17,6 +17,9 @@ This project implements a sophisticated system for capturing and analyzing laser
   - `user_controlled_UI.ino` - Arduino code for laser control
 - `camera/` - Camera integration code
   - `camera_setup.py` - Basler camera setup and configuration
+- `raw_images/` - Sample captured raw images with different exposure times
+  - Contains raw image files (*.raw) and histogram analysis results (*.png)
+- `analysis_results/` - Output directory for analysis results
 - Analysis modules:
   - `histogram_saturation_analyzer.py` - Analyzes image saturation using histograms
   - `saturation_pixel_count_analyzer.py` - Analyzes image saturation using pixel counts
