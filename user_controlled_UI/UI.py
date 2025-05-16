@@ -1,5 +1,6 @@
 import sys
 import serial
+import os
 from PySide6.QtWidgets import QApplication, QWidget
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile, QTimer
@@ -12,7 +13,21 @@ class MyApp(QWidget):
 
         # Load the UI from the .ui file created in Qt Designer
         loader = QUiLoader()
-        file = QFile("/Users/bilalshihab/dev/laser_speckle_project/laser_speckle_UI/form.ui")
+        
+        # Use a relative path instead of hardcoded path
+        ui_file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
+                                   "laser_speckle_UI", "form.ui")
+        
+        file = QFile(ui_file_path)
+        if not file.exists():
+            print(f"Error: UI file not found at {ui_file_path}")
+            # Try to find the UI file in the same directory
+            ui_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "form.ui")
+            file = QFile(ui_file_path)
+            if not file.exists():
+                print(f"Error: UI file not found at {ui_file_path}")
+                sys.exit(1)
+            
         file.open(QFile.ReadOnly)
         self.ui = loader.load(file, self)
         file.close()

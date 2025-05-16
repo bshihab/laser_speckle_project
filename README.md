@@ -1,6 +1,6 @@
 # Laser Speckle Analysis Project
 
-This project implements a sophisticated system for capturing and analyzing laser speckle patterns in real-time. It consists of several components:
+This project implements a system for capturing and analyzing laser speckle patterns in real-time. It consists of several components:
 
 1. A modern Python-based UI application for laser speckle analysis
 2. Arduino-based hardware control for laser intensity adjustment
@@ -17,9 +17,6 @@ This project implements a sophisticated system for capturing and analyzing laser
   - `user_controlled_UI.ino` - Arduino code for laser control
 - `camera/` - Camera integration code
   - `camera_setup.py` - Basler camera setup and configuration
-- `raw_images/` - Sample captured raw images with different exposure times (available locally, not in Git)
-  - Contains raw image files (*.raw) and histogram analysis results (*.png)
-  - Note: These files are excluded from Git via .gitignore due to their large size
 - `analysis_results/` - Output directory for analysis results
 - Analysis modules:
   - `histogram_saturation_analyzer.py` - Analyzes image saturation using histograms
@@ -31,7 +28,7 @@ This project implements a sophisticated system for capturing and analyzing laser
 ## Prerequisites
 
 ### Hardware Requirements
-- Arduino board (tested with Arduino Uno/Due)
+- Arduino board
 - Basler camera (pylon SDK required)
 - Digital-to-Analog Converter (DAC) connected to Arduino pin A0
 - Laser source connected to DAC output
@@ -151,12 +148,3 @@ The project includes several standalone analysis scripts:
   file = QFile("/Users/bilalshihab/dev/laser_speckle_project/laser_speckle_UI/form.ui")
   ```
   
-- The camera integration assumes specific Basler camera models
-
-## Contributing
-
-To contribute to this project:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
