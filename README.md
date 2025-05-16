@@ -1,6 +1,6 @@
 # Laser Speckle Analysis Project
 
-This project implements a system for capturing and analyzing laser speckle patterns in real-time. It consists of several components:
+This project implements a sophisticated system for capturing and analyzing laser speckle patterns in real-time. It consists of several components:
 
 1. A modern Python-based UI application for laser speckle analysis
 2. Arduino-based hardware control for laser intensity adjustment
@@ -10,13 +10,16 @@ This project implements a system for capturing and analyzing laser speckle patte
 ## Project Structure
 
 - `laser_speckle_UI/` - Main UI application for laser speckle analysis
-  - `updated_widget.py` - Modern UI implementation with advanced features
+  - `updated_widget.py` - **Complete, all-in-one solution** with camera integration and Arduino control
   - `updated_ui.py` and `updated_ui.ui` - UI definitions
-- `user_controlled_UI/` - Simple UI for controlling laser intensity via Arduino
+- `user_controlled_UI/` - Alternative simple UI for controlling laser intensity (not needed if using updated_widget.py)
   - `UI.py` - Simple UI implementation
   - `user_controlled_UI.ino` - Arduino code for laser control
 - `camera/` - Camera integration code
   - `camera_setup.py` - Basler camera setup and configuration
+- `raw_images/` - Sample captured raw images with different exposure times (available locally, not in Git)
+  - Contains raw image files (*.raw) and histogram analysis results (*.png)
+  - Note: These files are excluded from Git via .gitignore due to their large size
 - `analysis_results/` - Output directory for analysis results
 - Analysis modules:
   - `histogram_saturation_analyzer.py` - Analyzes image saturation using histograms
@@ -73,35 +76,33 @@ Note: PyPylon may require additional installation steps. Please refer to the [Ba
 
 ## Running the Applications
 
-### Laser Speckle UI (Advanced)
+### Main Application (Recommended)
 
-This is the main application for advanced laser speckle analysis:
+The `updated_widget.py` in the laser_speckle_UI directory is the recommended application to use. It provides a complete, all-in-one solution that:
+- Controls the Basler camera
+- Communicates with the Arduino for laser intensity control
+- Performs speckle pattern analysis
+- Provides auto-adjustment capabilities
+
+To run it:
 
 ```bash
 cd laser_speckle_UI
 python updated_widget.py
 ```
 
-Features:
-- Capture images from Basler camera with configurable exposure
-- Analyze speckle contrast with advanced algorithms
-- Automatic ROI selection
-- Auto-adjustment of laser intensity based on analysis
-- Save and visualize analysis results
+**Note:** When using `updated_widget.py`, you don't need to separately run the simple UI or upload Arduino code - it handles all communication with both the camera and Arduino.
 
-### User Controlled UI (Simple)
+### Alternative: Simple Laser Control UI
 
-A simple UI for manually controlling laser intensity:
+The simple UI is an alternative, minimal interface just for controlling laser intensity. Only use this if you're not using the main application:
 
 ```bash
 cd user_controlled_UI
 python UI.py
 ```
 
-Features:
-- Slider for manually adjusting laser intensity
-- Real-time feedback of laser current and temperature
-- Current vs. Voltage plotting
+For this simple UI to work, you must first upload the `user_controlled_UI.ino` sketch to your Arduino.
 
 ### Camera Setup/Testing
 
