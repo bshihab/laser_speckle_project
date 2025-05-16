@@ -1,75 +1,158 @@
-# laser_speckle_project
+# Laser Speckle Analysis Project
 
-This project implements a user interface (UI) for controlling and adjusting the contrast of a laser speckle pattern. It consists of a Python-based UI built with PySide6 and an Arduino program for hardware control.
+This project implements a sophisticated system for capturing and analyzing laser speckle patterns in real-time. It consists of several components:
 
-## Overview
+1. A modern Python-based UI application for laser speckle analysis
+2. Arduino-based hardware control for laser intensity adjustment
+3. Image analysis tools for contrast and saturation measurements
+4. Basler camera integration for image capture
 
-The system allows users to adjust the contrast of a laser speckle pattern through a graphical slider in the UI. The Python application communicates with an Arduino microcontroller, which in turn controls a digital-to-analog converter (DAC) to adjust the intensity of a laser. The UI also displays feedback from the Arduino, including the current laser intensity and temperature.
+## Project Structure
 
-## Features
+- `laser_speckle_UI/` - Main UI application for laser speckle analysis
+  - `updated_widget.py` - Modern UI implementation with advanced features
+  - `updated_ui.py` and `updated_ui.ui` - UI definitions
+- `user_controlled_UI/` - Simple UI for controlling laser intensity via Arduino
+  - `UI.py` - Simple UI implementation
+  - `user_controlled_UI.ino` - Arduino code for laser control
+- `camera/` - Camera integration code
+  - `camera_setup.py` - Basler camera setup and configuration
+- Analysis modules:
+  - `histogram_saturation_analyzer.py` - Analyzes image saturation using histograms
+  - `saturation_pixel_count_analyzer.py` - Analyzes image saturation using pixel counts
+  - `contrast_analyzer.py` - Analyzes contrast in speckle patterns
+  - `exposure_calibration.py` - Calibrates camera exposure settings
+  - `optimal_exposure_finder.py` - Finds optimal exposure settings for speckle patterns
 
--   **Graphical UI**: A slider for adjusting the laser speckle contrast.
--   **Real-time Feedback**: Displays the current laser intensity and temperature.
--   **Serial Communication**: Utilizes serial communication to send control signals to the Arduino and receive feedback.
--   **Data Plotting**: Plots the relationship between the applied voltage and the resulting current in real-time.
--   **Error Handling**: Includes a retry mechanism for establishing serial communication and checksum verification for data integrity.
+## Prerequisites
 
-## Components
+### Hardware Requirements
+- Arduino board (tested with Arduino Uno/Due)
+- Basler camera (pylon SDK required)
+- Digital-to-Analog Converter (DAC) connected to Arduino pin A0
+- Laser source connected to DAC output
 
-### Python Application (`UI.py`)
+### Software Dependencies
+1. Python 3.8+ environment (Python 3.10 recommended)
+2. PySide6 for UI
+3. PyPylon for Basler camera integration
+4. NumPy, Matplotlib for analysis
+5. Basler Pylon SDK (must be installed separately)
+6. Arduino IDE for uploading Arduino code
 
--   **UI Design**: Uses a `.ui` file created with Qt Designer for the graphical interface.
--   **Serial Communication**: Sets up and manages serial communication with the Arduino.
--   **Data Handling**: Sends control signals to the Arduino based on user input and processes feedback data.
--   **Plotting**: Uses `matplotlib` to plot the current vs. voltage data.
+## Installation
 
-### Arduino Program (`user_controlled_UI.ino`)
+### 1. Setting Up the Python Environment
 
--   **DAC Control**: Controls the laser intensity via a DAC connected to pin `A0`.
--   **Serial Communication**: Receives control signals from the Python application and sends back periodic feedback.
--   **Checksum Verification**: Ensures the integrity of received data using a checksum.
--   **Periodic Feedback**: Sends the current laser intensity and temperature to the Python application at regular intervals.
+Create and activate a virtual environment:
+```bash
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+```
 
-## Setup
+Install the required Python packages:
+```bash
+pip install PySide6 numpy matplotlib pyserial pypylon opencv-python
+```
 
-### Prerequisites
+Note: PyPylon may require additional installation steps. Please refer to the [Basler Pylon SDK documentation](https://docs.baslerweb.com/overview).
 
--   Python 3.x
--   PySide6
--   `matplotlib`
--   `pyserial`
--   Arduino IDE
--   Arduino board (e.g., Arduino Uno)
+### 2. Arduino Setup
 
-### Installation
+1. Open the Arduino IDE
+2. Load the `user_controlled_UI/user_controlled_UI.ino` file
+3. Connect your Arduino board to your computer
+4. Upload the sketch to the Arduino
 
-1. **Python Dependencies**: Install the required Python packages:
+### 3. Hardware Connections
 
-    ```bash
-    pip install PySide6 matplotlib pyserial
-    ```
+1. Connect the DAC to Arduino pin A0
+2. Connect the laser source to the DAC output
+3. Connect the Basler camera to the computer via USB
 
-2. **Arduino Setup**:
-    -   Connect the Arduino board to your computer.
-    -   Open the `user_controlled_UI.ino` file in the Arduino IDE.
-    -   Upload the program to the Arduino board.
+## Running the Applications
 
-3. **Hardware Connections**:
-    -   Connect the DAC output pin (`A0` on the Arduino) to the laser control circuit.
+### Laser Speckle UI (Advanced)
 
-### Running the Application
+This is the main application for advanced laser speckle analysis:
 
-1. Ensure the Arduino is connected and the correct serial port is specified in `UI.py`.
-2. Run the Python application:
+```bash
+cd laser_speckle_UI
+python updated_widget.py
+```
 
-    ```bash
-    python UI.py
-    ```
+Features:
+- Capture images from Basler camera with configurable exposure
+- Analyze speckle contrast with advanced algorithms
+- Automatic ROI selection
+- Auto-adjustment of laser intensity based on analysis
+- Save and visualize analysis results
 
-3. Use the slider in the UI to adjust the laser speckle contrast. The feedback data will be displayed in the UI, and the plot will update in real-time.
+### User Controlled UI (Simple)
 
-## Usage
+A simple UI for manually controlling laser intensity:
 
--   **Adjust Contrast**: Move the slider in the UI to change the laser speckle contrast.
--   **Stop and Plot**: Click the "Stop" button to stop data collection and display the plot of current vs. voltage.
--   **Monitor Feedback**: Observe the real-time feedback from the Arduino in the UI labels.
+```bash
+cd user_controlled_UI
+python UI.py
+```
+
+Features:
+- Slider for manually adjusting laser intensity
+- Real-time feedback of laser current and temperature
+- Current vs. Voltage plotting
+
+### Camera Setup/Testing
+
+To test the camera setup and capture raw images:
+
+```bash
+cd camera
+python camera_setup.py
+```
+
+## Debugging Guide
+
+### Serial Connection Issues
+- Check the Arduino connection port in UI.py (currently set to `/dev/cu.usbmodem101`)
+- The code includes a retry mechanism to establish serial connection
+
+### Camera Connection Issues
+- Ensure Basler Pylon SDK is properly installed
+- Check if the camera is detected using Basler's Pylon Viewer application
+- Verify permissions for camera access
+
+### UI Display Issues
+- The UI files are designed for PySide6. Ensure you have the correct version installed
+- Form paths may need to be adjusted based on your installation location
+
+## Data Analysis Tools
+
+The project includes several standalone analysis scripts:
+
+- `contrast_analyzer.py` - Analyzes contrast in speckle patterns
+  ```bash
+  python contrast_analyzer.py --image path/to/your/image.raw --width 960 --height 1200
+  ```
+
+- `histogram_saturation_analyzer.py` - Analyzes image saturation
+  ```bash
+  python histogram_saturation_analyzer.py --image path/to/your/image.raw
+  ```
+
+## Known Issues
+
+- The UI.py file has a hardcoded path to the UI file that may need to be updated:
+  ```python
+  file = QFile("/Users/bilalshihab/dev/laser_speckle_project/laser_speckle_UI/form.ui")
+  ```
+  
+- The camera integration assumes specific Basler camera models
+
+## Contributing
+
+To contribute to this project:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
