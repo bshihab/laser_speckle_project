@@ -127,7 +127,7 @@ If you encounter import errors when running the modularized application, try the
 ## Debugging Guide
 
 ### Serial Connection Issues
-- Check the Arduino connection port (common ports are `/dev/cu.usbmodem*` on macOS, `/dev/ttyACM*` on Linux, and `COM*` on Windows)
+- Check the Arduino connection port (common ports are `/dev/cu.usbmodem*` on macOS)
 - The code includes a retry mechanism to establish serial connection
 
 ### Camera Connection Issues
