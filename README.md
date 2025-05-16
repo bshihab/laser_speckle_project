@@ -140,11 +140,4 @@ The project includes several standalone analysis scripts:
   ```bash
   python histogram_saturation_analyzer.py --image path/to/your/image.raw
   ```
-
-## Known Issues
-
-- The UI.py file has a hardcoded path to the UI file that may need to be updated:
-  ```python
-  file = QFile("/Users/bilalshihab/dev/laser_speckle_project/laser_speckle_UI/form.ui")
-  ```
   
